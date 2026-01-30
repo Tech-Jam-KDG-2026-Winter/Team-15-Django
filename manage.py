@@ -6,6 +6,9 @@ import sys
 
 def main():
     """Run administrative tasks."""
+    # Add the 'apps' directory to the Python path
+    sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'apps'))
+
     os.environ.setdefault(
     'DJANGO_SETTINGS_MODULE',
     'config.settings.local'
