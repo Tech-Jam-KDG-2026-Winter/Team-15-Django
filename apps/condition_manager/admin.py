@@ -1,7 +1,9 @@
 from django.contrib import admin
-from .models import CustomUser, ConditionLog, ExerciseMenu, Routine
+from .models import ConditionLog, ExerciseMenu, Routine, Tag # Tagを追加
 
-admin.site.register(CustomUser)
+# Register your models here.
 admin.site.register(ConditionLog)
 admin.site.register(ExerciseMenu)
 admin.site.register(Routine)
+admin.site.register(Tag) # これを追加
+
