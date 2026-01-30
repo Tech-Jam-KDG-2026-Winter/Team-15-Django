@@ -18,6 +18,7 @@ INSTALLED_APPS = [
 
     # starter apps
     "apps.common",
+    "apps.condition_manager.apps.ConditionManagerConfig",
 ]
 
 MIDDLEWARE = [
@@ -50,10 +51,12 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 ASGI_APPLICATION = "config.asgi.application"
 
+AUTH_USER_MODEL = 'condition_manager.CustomUser'
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": "/Users/aokuma/.gemini/tmp/7cfc44329c03da3be45fa718828f1dea1dc5f20bb45bca46628bcbba859e2967/db.sqlite3",
     }
 }
 
