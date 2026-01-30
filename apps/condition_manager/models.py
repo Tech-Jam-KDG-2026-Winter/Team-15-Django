@@ -1,15 +1,16 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 
-# User モデルの定義
-class CustomUser(AbstractUser):
-    # 追加のフィールドが必要な場合はここに定義
-    # これから追加予定
-    pass
+# Tag モデルの定義
+class Tag(models.Model):
+    name = models.CharField(max_length=50, unique=True, help_text="タグ名（例: 肩こり解消, ストレス軽減）")
+
+    def __str__(self):
+        return self.name
 
 # ConditionLog モデルの定義
 class ConditionLog(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     log_date = models.DateField()
     # 1から5までの疲れと気分のレベルを選択肢として定義
     # 入力内容はまだ仮
@@ -50,13 +51,18 @@ class ExerciseMenu(models.Model):
         blank=True,
         help_text="対象部位（例: 肩、背中、全身）"
     )
+    tags = models.ManyToManyField(
+        Tag,
+        blank=True,
+        help_text="この運動メニューに関連するタグ"
+    )
 
     def __str__(self):
         return self.name
 
 # Routine モデルの定義
 class Routine(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     exercise = models.ForeignKey(ExerciseMenu, on_delete=models.CASCADE)
     added_at = models.DateTimeField(auto_now_add=True)
 
