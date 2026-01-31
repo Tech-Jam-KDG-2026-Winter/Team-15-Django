@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.utils import timezone # 追加
 
 # Tag モデルの定義
 class Tag(models.Model):
@@ -11,7 +12,7 @@ class Tag(models.Model):
 # ConditionLog モデルの定義
 class ConditionLog(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    log_date = models.DateField()
+    log_date = models.DateField(default=timezone.now) # default=timezone.now を追加
     # 1から5までの疲れと気分のレベルを選択肢として定義
     # 入力内容はまだ仮
     fatigue_level = models.IntegerField(

@@ -79,3 +79,9 @@ STATICFILES_DIRS = [
 ]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# 認証関連のURL設定を追加
+LOGIN_REDIRECT_URL = '/'  # ログイン成功後にリダイレクトするURL
+LOGOUT_REDIRECT_URL = '/' # ログアウト後にリダイレクトするURL
+LOGIN_URL = '/accounts/login/' # ログインが必要なページにアクセスした際にリダイレクトするURL
+
