@@ -3,16 +3,23 @@ from django.urls import path
 
 # api/ に続くURLパターンを定義します
 urlpatterns = [
-    # 体調ログ (ConditionLog) 関連
-    # path('condition-logs/', views.condition_log_list_create, name='condition_log_list_create'), # ログインユーザーの体調ログ一覧取得・新規作成
-    # path('condition-logs/<int:pk>/', views.condition_log_detail, name='condition_log_detail'), # 特定の体調ログの詳細取得・更新・削除
-    # path('condition-logs/<str:date>/', views.condition_log_by_date, name='condition_log_by_date'), # 特定の日付の体調ログを取得・更新・削除 (例: /api/condition-logs/2023-01-01/)
+    #これは実装例です
 
-    # 運動メニュー (ExerciseMenu) 関連
-    # path('exercise-menus/', views.exercise_menu_list, name='exercise_menu_list'), # 運動メニュー一覧取得
-    # path('exercise-menus/<int:pk>/', views.exercise_menu_detail, name='exercise_menu_detail'), # 特定の運動メニュー詳細取得
+    #  # 【廣田さん担当】体調ログ保存＆メニュー提案API
+    # path('recommend/', views.recommend_exercise_view, name='recommend_exercise'),
 
-    # ルーティン (Routine) 関連
-    # path('routines/', views.routine_list_create, name='routine_list_create'), # ログインユーザーのルーティン一覧取得・新規追加
-    # path('routines/<int:pk>/', views.routine_detail, name='routine_detail'), # 特定のルーティン項目を削除
+    # # 【廣田さん担当】運動メニュー詳細API (追加)
+    # path('exercises/<int:pk>/', views.exercise_detail_view, name='exercise_detail'),
+
+    # # 【鈴木さん担当】ルーティン管理API
+    # path('routines/<int:exercise_id>/', views.routine_manage_view, name='manage_routine'),
+
+    # # 【鈴木さん担当】履歴取得API
+    # path('history/', views.history_list_view, name='history_list'),
+
+    # # 【鈴木さん担当】ルーティン一覧取得API (追加)
+    # path('routines/', views.routine_list_view, name='routine_list'),
+
+    # # 【鈴木さん担当】運動メニュー一覧・検索API (追加)
+    # path('exercises/', views.exercise_list_view, name='exercise_list'),
 ]

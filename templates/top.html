@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ホーム</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/">トップページ</a>
+            <span style="float: right;">
+                {% if user.is_authenticated %}
+                    こんにちは、{{ user.username }}さん！ 
+                    <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" style="background: none; border: none; color: #007bff; cursor: pointer; padding: 0;">ログアウト</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}">ログイン</a> | <a href="{% url 'signup' %}">新規登録</a>
+                {% endif %}
+            </span>
+        </nav>
+        <h1>ようこそ！</h1>
+    </header>
+
+    <main>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <p>ここはトップページです。</p>
+        <p>ログインして、アプリの機能をお使いください。</p>
+    </main>
+    
+    <!-- ここに他のJavaScriptなどがあれば記述 -->
+</body>
+</html>
