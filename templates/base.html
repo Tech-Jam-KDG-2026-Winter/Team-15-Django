@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>コンディション・パートナー</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="karada-body">
+    <header class="main-header">
+        <nav class="nav-menu">
+            <a href="/" class="nav-link">トップページ</a> |
+            <a href="/history/" class="nav-link">履歴を見る</a> |
+            <a href="/routines-list/" class="nav-link">ルーティンを見る</a> |
+            <a href="/exercise-list/" class="nav-link">運動メニュー一覧</a>
+            <span class="user-info" style="float: right;">
+                {% if user.is_authenticated %}
+                    <span class="user-name">{{ user.username }}さん</span>
+                    <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="logout-button">ログアウト</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="nav-link">ログイン</a> | 
+                    <a href="{% url 'signup' %}" class="nav-link">新規登録</a>
+                {% endif %}
+            </span>
+        </nav>
+        <h1 class="page-title">{% block title %}コンディション・パートナー{% endblock %}</h1>
+    </header>
+
+    <main class="content-container">
+        {% if messages %}
+            <div class="message-list">
+                {% for message in messages %}
+                    <div class="message-item {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2026 Tech-Jam-Team-15</p>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

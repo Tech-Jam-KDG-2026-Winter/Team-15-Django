@@ -1,42 +1,32 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>ホーム</title>
-    <link rel="stylesheet" href="/static/css/style.css">
-</head>
-<body>
-    <header>
-        <nav>
-            <a href="/">トップページ</a>
-            <span style="float: right;">
-                {% if user.is_authenticated %}
-                    こんにちは、{{ user.username }}さん！ 
-                    <form action="{% url 'logout' %}" method="post" style="display: inline;">
-                        {% csrf_token %}
-                        <button type="submit" style="background: none; border: none; color: #007bff; cursor: pointer; padding: 0;">ログアウト</button>
-                    </form>
-                {% else %}
-                    <a href="{% url 'login' %}">ログイン</a> | <a href="{% url 'signup' %}">新規登録</a>
-                {% endif %}
-            </span>
-        </nav>
-        <h1>ようこそ！</h1>
-    </header>
+{% extends "base.html" %}
 
-    <main>
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+{% block title %}トップページ{% endblock %}
 
-        <p>ここはトップページです。</p>
-        <p>ログインして、アプリの機能をお使いください。</p>
-    </main>
-    
-    <!-- ここに他のJavaScriptなどがあれば記述 -->
-</body>
-</html>
+{% block content %}
+<section id="condition-input-section" class="input-section">
+    <h2 class="section-title">今日のコンディション入力</h2>
+    <form id="condition-form" class="condition-form">
+        <div class="form-group">
+            <label for="fatigue_level">疲れレベル (1-5):</label>
+            <input type="number" id="fatigue_level" name="fatigue_level" min="1" max="5" required class="form-input">
+        </div>
+        <div class="form-group">
+            <label for="mood_level">気分レベル (1-5):</label>
+            <input type="number" id="mood_level" name="mood_level" min="1" max="5" required class="form-input">
+        </div>
+        <div class="form-group">
+            <label for="body_concern">体の悩み:</label>
+            <input type="text" id="body_concern" name="body_concern" placeholder="例: 肩こり、腰痛" class="form-input">
+        </div>
+        <button type="submit" class="submit-button">おすすめを提案してもらう</button>
+    </form>
+</section>
+
+<section id="recommendations-section" class="results-section">
+    <h2 class="section-title">おすすめメニュー</h2>
+    <div id="recommendations" class="card-container">
+        <!-- JavaScriptでここに表示 -->
+        <p class="loading-text">コンディションを入力すると、あなたにぴったりのメニューが表示されます。</p>
+    </div>
+</section>
+{% endblock %}
