@@ -66,6 +66,7 @@ class Routine(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     exercise = models.ForeignKey(ExerciseMenu, on_delete=models.CASCADE)
     added_at = models.DateTimeField(auto_now_add=True)
+    view_count = models.IntegerField(default=0, help_text="このルーティンの閲覧回数")  # 追加
 
     class Meta:
         # 同じユーザーが同じ運動をルーティンに複数回追加できないようにする
