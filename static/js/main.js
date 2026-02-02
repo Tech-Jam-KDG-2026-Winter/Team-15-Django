@@ -66,11 +66,19 @@ async function addRoutine(exerciseId) {
         }
     });
 
+    const data = await response.json();
+
     if (response.status === 201) {
-        alert('ルーティンに追加しました！');
+        const exerciseTitle = data.exercise ? data.exercise.name : '不明な運動メニュー';
+        alert(`${exerciseTitle} をルーティンに追加しました！`);
         fetchRoutines();
+    } else if(response.status === 200) {
+        const exerciseTitle = data.exercise ? data.exercise.name : '不明な運動メニュー';
+        alert(`この運動メニュー (${exerciseTitle}) は既にルーティンに登録されています。`);
+        fetchRoutines(); 
     } else {
-        alert('ルーティン追加に失敗しました。');
+        const errorMessage = data && data.error ? data.error : 'ルーティン追加に失敗しました。';
+        alert(errorMessage);
     }
 }
 

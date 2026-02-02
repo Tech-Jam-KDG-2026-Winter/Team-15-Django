@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from rest_framework import serializers
 
-from .models import ExerciseMenu, Tag
+
+from .models import ExerciseMenu, Tag, ConditionLog, Routine
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -16,12 +16,18 @@ class ExerciseMenuSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ExerciseMenu
-        fields = (
-            "id",
-            "name",
-            "description",
-            "beginner_guide",
-            "category",
-            "target_area",
-            "tags",
-        )
+        fields = "__all__"
+
+
+class ConditionLogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ConditionLog
+        fields = "__all__"
+
+
+class RoutineSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Routine
+        fields = "__all__"
+
+
