@@ -1,5 +1,6 @@
 from .base import *  # noqa
 
 DEBUG = True
-# Allow Django test client host
+
+# Allow test client host used by Django tests
 ALLOWED_HOSTS += ['testserver']

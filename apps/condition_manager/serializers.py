@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework import serializers
 
 from .models import ExerciseMenu, Tag
 
@@ -6,7 +7,8 @@ from .models import ExerciseMenu, Tag
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
-        fields = ("id", "name")
+        # Return only the tag name to match API contract
+        fields = ("name",)
 
 
 class ExerciseMenuSerializer(serializers.ModelSerializer):
