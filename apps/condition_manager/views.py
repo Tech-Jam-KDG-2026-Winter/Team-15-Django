@@ -27,20 +27,23 @@ def routine_manage_view(request, exercise_id: int):
     if request.method == 'POST':
         # 既に登録済みの場合は別のメッセージを返す
         routine, created = Routine.objects.get_or_create(user=request.user, exercise=exercise)
+        serializer = RoutineSerializer(routine)
         
         if created:
-            return Response(
-                {"message": "ルーティンに追加しました"}, 
-                status=status.HTTP_201_CREATED
-            )
+            # 新規作成時：メッセージとルーティンデータを返す
+            return Response({
+                "message": "ルーティンに追加しました",
+                "routine": serializer.data
+            }, status=status.HTTP_201_CREATED)
         else:
-            return Response(
-                {"message": "この運動メニューは既にルーティンに登録されています。"}, 
-                status=status.HTTP_200_OK
-            )
+            # 既に存在する場合：メッセージと既存のルーティンデータを返す
+            return Response({
+                "message": "この運動メニューは既にルーティンに登録されています。",
+                "routine": serializer.data
+            }, status=status.HTTP_200_OK)
 
     elif request.method == 'DELETE':
-        # 削除対象がない場合は適切なエラーメッセージを返す
+        # 削除対象がない場合はエラーメッセージ
         deleted_count, _ = Routine.objects.filter(user=request.user, exercise=exercise).delete()
         
         if deleted_count == 0:
@@ -53,14 +56,14 @@ def routine_manage_view(request, exercise_id: int):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated]) # ログインユーザーのみアクセス可能
+@permission_classes([IsAuthenticated]) # ログインユーザーのみ
 def history_list_view(request):
     """
     ログインユーザーの過去の体調ログ履歴を一覧で返すAPI
     並び順: 新しい順
     件数制限: 20件、5件ごとにページング
     """
-    # クエリパラメータからページ番号を取得（デフォルトは1ページ目）
+    # パラメータからページ番号を取得
     page_number = request.GET.get('page', 1)
     
     # 全履歴を取得（新しい順）
@@ -88,7 +91,7 @@ def history_list_view(request):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated]) # ログインユーザーのみアクセス可能
+@permission_classes([IsAuthenticated]) # ログインユーザーのみ
 def routine_list_view(request):
     """
     ログインユーザーのルーティン一覧を返すAPI
