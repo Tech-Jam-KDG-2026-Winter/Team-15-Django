@@ -14,6 +14,10 @@ urlpatterns = [
 
     # トップページ (今回は認証機能のみなので、一時的にデフォルトのルートパスを変更)
     path("", TemplateView.as_view(template_name="top.html"), name="top"),
+    # ▼ UI確認用（仮）
+    path("history/", TemplateView.as_view(template_name="history.html"), name="history"),
+    path("routines-list/", TemplateView.as_view(template_name="routines.html"), name="routines"),
+    path("exercise-list/", TemplateView.as_view(template_name="exercise_list.html"), name="exercise_list"),
 
     path("admin/", admin.site.urls),
     path("healthz/", healthz),

@@ -3,37 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>コンディション・パートナー</title>
+    <title>{% block title %}コンディション・パートナー{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body class="karada-body">
     <header class="main-header">
-        <nav class="nav-menu">
-            <a href="/" class="nav-link">トップページ</a> |
-            <a href="/history/" class="nav-link">履歴を見る</a> |
-            <a href="/routines-list/" class="nav-link">ルーティンを見る</a> |
-            <a href="/exercise-list/" class="nav-link">運動メニュー一覧</a>
-            <span class="user-info" style="float: right;">
-                {% if user.is_authenticated %}
-                    <span class="user-name">{{ user.username }}さん</span>
-                    <form action="{% url 'logout' %}" method="post" style="display: inline;">
-                        {% csrf_token %}
-                        <button type="submit" class="logout-button">ログアウト</button>
-                    </form>
-                {% else %}
-                    <a href="{% url 'login' %}" class="nav-link">ログイン</a> | 
-                    <a href="{% url 'signup' %}" class="nav-link">新規登録</a>
-                {% endif %}
-            </span>
-        </nav>
-        <h1 class="page-title">{% block title %}コンディション・パートナー{% endblock %}</h1>
+        <div class="header-inner">
+            <div class="nav-top">
+                <h1 class="page-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                    Condition Partner
+                </h1>
+            </div>
+            <nav class="nav-menu">
+                <a href="{% url 'top' %}" class="nav-link">トップ</a>
+                <a href="{% url 'history' %}" class="nav-link">履歴</a>
+                <a href="{% url 'routines' %}" class="nav-link">ルーティン</a>
+                <a href="{% url 'exercise_list' %}" class="nav-link">メニュー一覧</a>
+                <div class="user-info">
+                    {% if user.is_authenticated %}
+                        <span class="user-name">{{ user.username }}さん</span>
+                        <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="logout-button">ログアウト</button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="nav-link">ログイン</a>
+                        <a href="{% url 'signup' %}" class="nav-link">新規登録</a>
+                    {% endif %}
+                </div>
+            </nav>
+        </div>
     </header>
 
     <main class="content-container">
         {% if messages %}
             <div class="message-list">
                 {% for message in messages %}
-                    <div class="message-item {{ message.tags }}">{{ message }}</div>
+                    <div class="message-item {{ message.tags }}">
+                        {% if message.tags == 'success' %}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                        {% endif %}
+                        {{ message }}
+                    </div>
                 {% endfor %}
             </div>
         {% endif %}
@@ -42,7 +61,7 @@
     </main>
 
     <footer class="main-footer">
-        <p>&copy; 2026 Tech-Jam-Team-15</p>
+        <p>&copy; 2026 Condition Partner.Team-15.</p>
     </footer>
 
     <script src="/static/js/main.js"></script>

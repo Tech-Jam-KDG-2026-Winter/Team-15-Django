@@ -1,13 +1,18 @@
 {% extends "base.html" %}
 
-{% block title %}体調ログ履歴{% endblock %}
+{% block title %}体調ログ履歴 | コンディション・パートナー{% endblock %}
 
 {% block content %}
 <section class="history-section">
-    <h2 class="section-title">あなたの体調ログ履歴</h2>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+        <h2 class="section-title" style="margin-bottom: 0;">あなたの体調ログ履歴</h2>
+    </div>
+    
     <div id="history-list" class="log-container">
         <!-- JavaScriptでここに表示 -->
-        <p class="loading-text">履歴を読み込み中...</p>
+        <div class="loading-text">
+            <p>過去の記録を読み込んでいます...</p>
+        </div>
     </div>
 </section>
 {% endblock %}
