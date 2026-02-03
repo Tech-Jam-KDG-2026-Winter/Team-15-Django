@@ -21,4 +21,8 @@ urlpatterns = [
     # 運動メニュー詳細API
     path('exercises/<int:pk>/', views.exercise_detail_view, name='exercise_detail'),
 
+
+    path('api/exercises/', views.exercise_list_view, name='exercise-list'),
+    path('api/exercises/<int:pk>/', views.exercise_detail_view, name='exercise-detail'),
+
 ]
