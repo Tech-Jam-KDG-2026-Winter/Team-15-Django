@@ -14,9 +14,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework",
 
     # starter apps
     "apps.common",
+    "apps.management",
     "apps.condition_manager.apps.ConditionManagerConfig",
     "apps.accounts.apps.AccountsConfig",
 ]

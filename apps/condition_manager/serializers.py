@@ -1,5 +1,22 @@
 from rest_framework import serializers
-from .models import ConditionLog, Routine, ExerciseMenu
+
+
+from .models import ExerciseMenu, Tag, ConditionLog, Routine
+
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        # Return only the tag name to match API contract
+        fields = ("name",)
+
+
+class ExerciseMenuSerializer(serializers.ModelSerializer):
+    tags = TagSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = ExerciseMenu
+        fields = "__all__"
 
 
 class ConditionLogSerializer(serializers.ModelSerializer):
@@ -14,7 +31,3 @@ class RoutineSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class ExerciseMenuSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ExerciseMenu
-        fields = "__all__"

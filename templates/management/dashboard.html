@@ -1,0 +1,99 @@
+{% extends 'management/base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">ダッシュボード</h1>
+</div>
+
+<!-- KPI Cards -->
+<div class="row">
+    <div class="col-md-3 mb-4">
+        <div class="card text-white bg-primary shadow">
+            <div class="card-body">
+                <h5 class="card-title">総ユーザー数</h5>
+                <h2 class="card-text">{{ total_users }}</h2>
+                <small>（直近30日: +{{ new_users_30d }}）</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="card text-white bg-success shadow">
+            <div class="card-body">
+                <h5 class="card-title">体調ログ蓄積数</h5>
+                <h2 class="card-text">{{ total_logs }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="card text-white bg-info shadow">
+            <div class="card-body">
+                <h5 class="card-title">運動メニュー数</h5>
+                <h2 class="card-text">{{ total_exercises }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="card text-white bg-warning shadow">
+            <div class="card-body">
+                <h5 class="card-title">Coming Soon</h5>
+                <h2 class="card-text">-</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Recent Logs Table -->
+    <div class="col-md-8">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">最近の体調ログ</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>日付</th>
+                                <th>ユーザー</th>
+                                <th>疲れ</th>
+                                <th>気分</th>
+                                <th>悩み</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for log in recent_logs %}
+                            <tr>
+                                <td>{{ log.log_date }}</td>
+                                <td>{{ log.user.username }}</td>
+                                <td>{{ log.fatigue_level }}</td>
+                                <td>{{ log.mood_level }}</td>
+                                <td>{{ log.body_concern|truncatechars:20 }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center">データがありません</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simple Chart Placeholder -->
+    <div class="col-md-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">システム情報</h6>
+            </div>
+            <div class="card-body">
+                <p>Status: <span class="badge bg-success">Normal</span></p>
+                <p>Ver: 1.0.0</p>
+                <p>最終更新: 今</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

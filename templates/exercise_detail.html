@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}メニュー詳細 | コンディション・パートナー{% endblock %}
+
+{% block content %}
+<nav style="margin-bottom: 20px;">
+    <a href="/exercise-list/" class="nav-link" style="display: inline-flex; align-items: center; gap: 4px; padding: 0;">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        一覧に戻る
+    </a>
+</nav>
+
+<section class="detail-section">
+    <div id="exercise-detail" class="detail-container">
+        <!-- JavaScriptでここに表示 -->
+        <div class="loading-text">
+            <p>詳細情報を読み込んでいます...</p>
+        </div>
+    </div>
+</section>
+{% endblock %}
