@@ -1,0 +1,62 @@
+{% extends 'management/base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">ユーザー詳細: {{ target_user.username }}</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">ユーザー情報 / 権限設定</div>
+            <div class="card-body">
+                <p><strong>Email:</strong> {{ target_user.email }}</p>
+                <p><strong>登録日:</strong> {{ target_user.date_joined }}</p>
+                <p><strong>最終ログイン:</strong> {{ target_user.last_login }}</p>
+                
+                <hr>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3 form-check">
+                        {{ form.is_staff }}
+                        <label class="form-check-label" for="{{ form.is_staff.id_for_label }}">
+                            管理者権限 (is_staff)
+                        </label>
+                        <div class="form-text">管理画面へのアクセス権限を付与します。</div>
+                    </div>
+                    <div class="mb-3 form-check">
+                        {{ form.is_active }}
+                        <label class="form-check-label" for="{{ form.is_active.id_for_label }}">
+                            アクティブ (is_active)
+                        </label>
+                        <div class="form-text">チェックを外すとユーザーはログインできなくなります。</div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">権限を更新</button>
+                    <a href="{% url 'management:user_list' %}" class="btn btn-secondary">一覧に戻る</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header">直近の活動ログ (最新10件)</div>
+            <ul class="list-group list-group-flush">
+                {% for log in recent_logs %}
+                <li class="list-group-item">
+                    <div class="d-flex justify-content-between">
+                        <span>{{ log.log_date }}</span>
+                        <span class="badge bg-light text-dark">疲れ:{{ log.fatigue_level }} / 気分:{{ log.mood_level }}</span>
+                    </div>
+                    <small class="text-muted">{{ log.body_concern|default:"(悩みなし)" }}</small>
+                </li>
+                {% empty %}
+                <li class="list-group-item text-center text-muted">ログなし</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
