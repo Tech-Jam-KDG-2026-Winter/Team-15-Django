@@ -1,0 +1,440 @@
+:root {
+    --color-primary: #57bc9c;
+    --color-secondary: #274ca0;
+    --color-bg: #f3f4f6;
+    --color-card: #ffffff;
+    --color-text-main: #1f2937;
+    --color-text-muted: #6b7280;
+    --color-border: #e5e7eb;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --radius-md: 12px;
+    --radius-lg: 16px;
+}
+
+/* 基本設定 */
+body.karada-body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    line-height: 1.5;
+    color: var(--color-text-main);
+    background-color: var(--color-bg);
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+.content-container {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 24px 16px 80px;
+}
+
+/* ヘッダー */
+.main-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--color-border);
+    padding: 12px 0;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: var(--shadow-sm);
+}
+
+.header-inner {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 0.875rem;
+}
+
+.nav-link {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.nav-link:hover {
+    color: var(--color-secondary);
+    background-color: #eff6ff;
+}
+
+.user-info {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-name {
+    font-weight: 600;
+    color: var(--color-text-main);
+}
+
+.logout-button {
+    background: none;
+    border: 1px solid #fee2e2;
+    color: #ef4444;
+    cursor: pointer;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    transition: all 0.2s;
+}
+
+.logout-button:hover {
+    background-color: #fef2f2;
+}
+
+.page-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--color-secondary);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* タイポグラフィ */
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--color-text-main);
+    border-left: 4px solid var(--color-primary);
+    padding-left: 12px;
+}
+
+/* フォーム */
+.condition-form, .search-form, .auth-form {
+    background: var(--color-card);
+    padding: 24px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    margin-bottom: 32px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label, .form-body label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-main);
+}
+
+.form-input, .form-body input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s, ring 0.2s;
+}
+
+.form-input:focus, .form-body input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(87, 188, 156, 0.2);
+}
+
+.submit-button, .search-button {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 700;
+    width: 100%;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.submit-button:hover, .search-button:hover {
+    background-color: #48a689;
+}
+
+.submit-button:active {
+    transform: scale(0.98);
+}
+
+/* Card UI */
+.card-container, .log-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.menu-card, .log-entry, .routine-entry {
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    padding: 20px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.menu-card:hover, .routine-entry:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.menu-card h3, .routine-entry h3 {
+    margin: 0 0 12px;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.menu-card h3 a, .routine-entry h3 a {
+    color: var(--color-secondary);
+    text-decoration: none;
+}
+
+.menu-card p, .routine-entry p {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: 12px;
+    flex-grow: 1;
+}
+
+.card-meta {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin-bottom: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tag-badge {
+    background-color: #f3f4f6;
+    color: var(--color-text-muted);
+    padding: 2px 8px;
+    border-radius: 9999px;
+}
+
+.card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-border);
+}
+
+.add-routine-btn, .delete-routine-btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.add-routine-btn {
+    background-color: var(--color-secondary);
+    color: white;
+    border: none;
+}
+
+.add-routine-btn:hover {
+    background-color: #1e3a8a;
+}
+
+.delete-routine-btn {
+    background-color: #ffffff;
+    color: #ef4444;
+    border: 1px solid #fee2e2;
+}
+
+.delete-routine-btn:hover {
+    background-color: #fef2f2;
+}
+
+.detail-link {
+    font-size: 0.875rem;
+    color: var(--color-secondary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* 履歴 */
+.log-entry {
+    border-left: 4px solid var(--color-primary);
+}
+
+.log-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.log-item {
+    font-size: 0.875rem;
+}
+
+.log-label {
+    font-weight: 600;
+    color: var(--color-text-muted);
+    display: block;
+}
+
+.log-value {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-secondary);
+}
+
+/* 詳細ページ */
+.detail-container {
+    background: var(--color-card);
+    padding: 32px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+}
+
+.detail-header {
+    margin-bottom: 24px;
+}
+
+.detail-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--color-secondary);
+    margin: 0 0 8px;
+}
+
+.detail-description {
+    font-size: 1.125rem;
+    color: var(--color-text-muted);
+    margin-bottom: 24px;
+}
+
+.beginner-guide-content {
+    background-color: #f0fdfa;
+    padding: 24px;
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--color-primary);
+    margin: 32px 0;
+}
+
+.beginner-guide-content h3 {
+    margin-top: 0;
+    color: var(--color-primary);
+    font-size: 1.125rem;
+}
+
+/* 認証ページ */
+.auth-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 400px;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 24px;
+    color: var(--color-text-muted);
+}
+
+/* メッセージ */
+.message-list {
+    margin-bottom: 24px;
+}
+
+.message-item {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.message-item.success { background-color: #d1fae5; color: #065f46; }
+.message-item.error { background-color: #fee2e2; color: #991b1b; }
+
+/* Footer */
+.main-footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+    .header-inner {
+        padding: 0 12px;
+    }
+    
+    .nav-menu {
+        gap: 8px;
+    }
+    
+    .nav-link {
+        font-size: 0.75rem;
+        padding: 4px 6px;
+    }
+    
+    .page-title {
+        font-size: 1.125rem;
+    }
+    
+    .section-title {
+        font-size: 1.25rem;
+    }
+    
+    .card-container, .log-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .detail-container {
+        padding: 20px;
+    }
+    
+    .detail-title {
+        font-size: 1.5rem;
+    }
+}
+
+/* Utility */
+.loading-text {
+    text-align: center;
+    padding: 40px;
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+}

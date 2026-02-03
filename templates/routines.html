@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}ルーティン一覧 | コンディション・パートナー{% endblock %}
+
+{% block content %}
+<section class="routine-section">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+        <h2 class="section-title" style="margin-bottom: 0;">あなたのルーティン</h2>
+    </div>
+
+    <div id="routine-list" class="card-container">
+        <!-- JavaScriptでここに表示 -->
+        <div class="loading-text">
+            <p>お気に入りのメニューを読み込んでいます...</p>
+            <p style="font-size: 0.875rem; margin-top: 8px;">まだ登録がない場合は、トップページや一覧から追加してみましょう。</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

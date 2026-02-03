@@ -1,33 +1,28 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>ログイン</title>
-    <link rel="stylesheet" href="/static/css/style.css">
-</head>
-<body>
-    <header>
-        <h1>ログイン</h1>
-        <nav>
-            <a href="/">トップページ</a>
-        </nav>
-    </header>
+{% extends "base.html" %}
 
-    <main>
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+{% block title %}ログイン | コンディション・パートナー{% endblock %}
 
-        <form method="post">
+{% block content %}
+<section class="auth-section">
+    <div class="auth-container">
+        <div style="text-align: center; margin-bottom: 32px;">
+            <h2 style="font-size: 1.75rem; font-weight: 800; color: var(--color-secondary); margin-bottom: 8px;">おかえりなさい</h2>
+            <p style="color: var(--color-text-muted);">ログインして体調管理を続けましょう</p>
+        </div>
+        
+        <form method="post" class="auth-form">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">ログイン</button>
+            <div class="form-body">
+                {{ form.as_p }}
+            </div>
+            <button type="submit" class="submit-button" style="margin-top: 16px;">
+                ログインする
+            </button>
         </form>
-        <p>アカウントをお持ちでない場合は <a href="{% url 'signup' %}">こちら</a> から登録してください。</p>
-    </main>
-</body>
-</html>
+        
+        <div class="auth-footer">
+            <p>アカウントをお持ちでないですか？ <a href="{% url 'signup' %}" class="detail-link">新規登録はこちら</a></p>
+        </div>
+    </div>
+</section>
+{% endblock %}
