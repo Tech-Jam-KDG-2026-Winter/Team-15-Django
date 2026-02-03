@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}管理者ダッシュボード{% endblock %}</title>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<div class="sidebar">
+    <h3 class="text-center mb-4">管理パネル</h3>
+    <a href="{% url 'management:dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}nav-active{% endif %}">
+        📊 ダッシュボード
+    </a>
+    <a href="{% url 'management:user_list' %}" class="{% if request.resolver_match.url_name == 'user_list' %}nav-active{% endif %}">
+        👥 ユーザー管理
+    </a>
+    <a href="{% url 'management:exercise_list' %}" class="{% if request.resolver_match.url_name == 'exercise_list' %}nav-active{% endif %}">
+        💪 運動メニュー管理
+    </a>
+    <a href="{% url 'management:tag_list' %}" class="{% if request.resolver_match.url_name == 'tag_list' %}nav-active{% endif %}">
+        🏷️ タグ管理
+    </a>
+    <hr>
+    <a href="{% url 'top' %}">🏠 アプリTopへ戻る</a>
+    <form action="{% url 'logout' %}" method="post" id="logout-form" hidden>
+        {% csrf_token %}
+    </form>
+    <a href="#" onclick="document.getElementById('logout-form').submit(); return false;">
+        🚪 ログアウト
+    </a>
+</div>
+
+<div class="content">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+</div>
+
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

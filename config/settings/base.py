@@ -18,6 +18,7 @@ INSTALLED_APPS = [
 
     # starter apps
     "apps.common",
+    "apps.management",
     "apps.condition_manager.apps.ConditionManagerConfig",
     "apps.accounts.apps.AccountsConfig",
 ]

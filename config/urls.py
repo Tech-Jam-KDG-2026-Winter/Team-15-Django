@@ -11,6 +11,8 @@ from apps.common.api.health import healthz # これは残します
 urlpatterns = [
     # accountsアプリのURLをインクルード (認証関連)
     path('accounts/', include('apps.accounts.urls')),
+    # managementアプリのURLをインクルード (管理画面関連)
+    path('management/', include('apps.management.urls')),
 
     # トップページ (今回は認証機能のみなので、一時的にデフォルトのルートパスを変更)
     path("", TemplateView.as_view(template_name="top.html"), name="top"),
