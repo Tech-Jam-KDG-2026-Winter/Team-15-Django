@@ -1,17 +1,17 @@
 {% extends 'management/base.html' %}
 
 {% block content %}
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">タグ管理</h1>
-    <div class="btn-toolbar mb-2 mb-md-0">
-        <a href="{% url 'management:tag_add' %}" class="btn btn-primary">新規作成</a>
+<section class="management-list-section">
+    <div class="management-header">
+        <h2 class="section-title" style="margin-bottom: 0;">タグ管理</h2>
+        <div class="management-actions">
+            <a href="{% url 'management:tag_add' %}" class="btn-management-primary">新規作成</a>
+        </div>
     </div>
-</div>
 
-<div class="row">
-    <div class="col-md-8">
-        <div class="table-responsive">
-            <table class="table table-striped table-hover">
+    <div class="menu-card" style="max-width: 800px; margin: 0 auto; padding: 0;">
+        <div class="table-responsive-wrapper">
+            <table class="management-table">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -25,35 +25,53 @@
                         <td>{{ tag.id }}</td>
                         <td>{{ tag.name }}</td>
                         <td>
-                            <a href="{% url 'management:tag_edit' tag.id %}" class="btn btn-sm btn-outline-primary">編集</a>
-                            <a href="{% url 'management:tag_delete' tag.id %}" class="btn btn-sm btn-outline-danger">削除</a>
+                            <a href="{% url 'management:tag_edit' tag.id %}" class="btn-management-sm">編集</a>
+                            <a href="{% url 'management:tag_delete' tag.id %}" class="btn-management-sm-danger">削除</a>
                         </td>
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="3" class="text-center">タグが見つかりません</td>
+                        <td colspan="3" style="text-align: center; padding: 40px;">タグが見つかりません</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
-</div>
 
-<!-- ページネーション -->
-{% if is_paginated %}
-<nav aria-label="Page navigation">
-  <ul class="pagination justify-content-center">
-    {% if page_obj.has_previous %}
-    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">前へ</a></li>
-    {% endif %}
-    
-    <li class="page-item disabled"><a class="page-link" href="#">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a></li>
+    <!-- ページネーション -->
+    {% if is_paginated %}
+    <nav class="pagination-nav" aria-label="Page navigation">
+      <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">前へ</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <span class="page-link">前へ</span>
+        </li>
+        {% endif %}
+        
+        {% for i in paginator.page_range %}
+            {% if page_obj.number == i %}
+                <li class="page-item active"><span class="page-link">{{ i }}</span></li>
+            {% else %}
+                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %}
+        {% endfor %}
 
-    {% if page_obj.has_next %}
-    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">次へ</a></li>
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">次へ</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <span class="page-link">次へ</span>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
     {% endif %}
-  </ul>
-</nav>
-{% endif %}
+</section>
 {% endblock %}

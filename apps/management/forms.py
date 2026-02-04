@@ -18,12 +18,12 @@ class ExerciseMenuForm(forms.ModelForm):
         model = ExerciseMenu
         fields = ['name', 'description', 'beginner_guide', 'category', 'target_area', 'tags']
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control'}),
-            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
-            'beginner_guide': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
-            'category': forms.Select(attrs={'class': 'form-select'}),
-            'target_area': forms.TextInput(attrs={'class': 'form-control'}),
-            'tags': forms.SelectMultiple(attrs={'class': 'form-select', 'size': 5}),
+            'name': forms.TextInput(attrs={'class': 'form-input'}),
+            'description': forms.Textarea(attrs={'class': 'form-input', 'rows': 3}),
+            'beginner_guide': forms.Textarea(attrs={'class': 'form-input', 'rows': 3}),
+            'category': forms.Select(attrs={'class': 'form-input'}),
+            'target_area': forms.TextInput(attrs={'class': 'form-input'}),
+            'tags': forms.SelectMultiple(attrs={'class': 'form-input', 'size': 5}),
         }
 
 class TagForm(forms.ModelForm):
@@ -31,5 +31,5 @@ class TagForm(forms.ModelForm):
         model = Tag
         fields = ['name']
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'name': forms.TextInput(attrs={'class': 'form-input'}),
         }

@@ -438,3 +438,133 @@ body.karada-body {
     height: 20px;
     vertical-align: middle;
 }
+
+/* Beginner Guide Section */
+.beginner-guide-content {
+    background-color: #f0fdfa;
+    color: #134e4a;
+    padding: 24px;
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--color-primary);
+    margin: 32px 0;
+}
+.beginner-guide-content h3 {
+    margin-top: 0;
+    color: var(--color-primary);
+    font-size: 1.125rem;
+}
+.beginner-guide-content p {
+    margin-bottom: 0;
+    line-height: 1.6;
+}
+
+/* Pagination */
+.pagination-nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+.pagination {
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+.page-item {
+    margin: 0;
+}
+.page-item:first-child .page-link {
+    border-top-left-radius: var(--radius-md);
+    border-bottom-left-radius: var(--radius-md);
+}
+.page-item:last-child .page-link {
+    border-top-right-radius: var(--radius-md);
+    border-bottom-right-radius: var(--radius-md);
+}
+.page-item.disabled .page-link {
+    color: var(--color-text-muted);
+    pointer-events: none;
+    background-color: var(--color-bg);
+    border-color: var(--color-border);
+}
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: var(--color-secondary);
+    border-color: var(--color-secondary);
+}
+.page-link {
+    position: relative;
+    display: block;
+    padding: .75rem 1rem;
+    color: var(--color-secondary);
+    text-decoration: none;
+    background-color: var(--color-card);
+    border: 1px solid var(--color-border);
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.page-link:hover {
+    z-index: 2;
+    color: var(--color-secondary);
+    background-color: #f3f4f6;
+    border-color: var(--color-border);
+}
+
+/* Toast Notifications */
+.toast-container {
+    position: fixed;
+    top: 80px; /* Adjust for header height */
+    right: 20px;
+    z-index: 1050;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.toast-message {
+    padding: 16px 24px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    color: white;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    transform: translateX(100%);
+    animation: toast-in 0.5s forwards;
+    min-width: 250px;
+}
+
+.toast-message.success {
+    background-color: var(--color-primary);
+}
+.toast-message.error {
+    background-color: #ef4444;
+}
+.toast-message.info {
+    background-color: var(--color-secondary);
+}
+
+.toast-message.fade-out {
+    animation: toast-out 0.5s forwards;
+}
+
+@keyframes toast-in {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes toast-out {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}

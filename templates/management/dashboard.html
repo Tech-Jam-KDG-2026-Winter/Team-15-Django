@@ -1,57 +1,36 @@
 {% extends 'management/base.html' %}
 
 {% block content %}
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">ダッシュボード</h1>
-</div>
+<section class="dashboard-section">
+    <h2 class="section-title">ダッシュボード</h2>
 
-<!-- KPI Cards -->
-<div class="row">
-    <div class="col-md-3 mb-4">
-        <div class="card text-white bg-primary shadow">
-            <div class="card-body">
-                <h5 class="card-title">総ユーザー数</h5>
-                <h2 class="card-text">{{ total_users }}</h2>
-                <small>（直近30日: +{{ new_users_30d }}）</small>
-            </div>
+    <!-- KPI Cards -->
+    <div class="card-container" style="--grid-min-width: 200px; margin-bottom: 32px;">
+        <div class="menu-card" style="background-color: var(--color-secondary); color: white;">
+            <h3 style="color: white; font-size: 1rem;">総ユーザー数</h3>
+            <p style="font-size: 2rem; font-weight: 800; color: white; margin-bottom: 4px;">{{ total_users }}</p>
+            <small>（直近30日: +{{ new_users_30d }}）</small>
+        </div>
+        <div class="menu-card" style="background-color: var(--color-primary); color: white;">
+            <h3 style="color: white; font-size: 1rem;">体調ログ蓄積数</h3>
+            <p style="font-size: 2rem; font-weight: 800; color: white; margin-bottom: 4px;">{{ total_logs }}</p>
+        </div>
+        <div class="menu-card" style="background-color: #3b82f6; color: white;">
+            <h3 style="color: white; font-size: 1rem;">運動メニュー数</h3>
+            <p style="font-size: 2rem; font-weight: 800; color: white; margin-bottom: 4px;">{{ total_exercises }}</p>
         </div>
     </div>
-    <div class="col-md-3 mb-4">
-        <div class="card text-white bg-success shadow">
-            <div class="card-body">
-                <h5 class="card-title">体調ログ蓄積数</h5>
-                <h2 class="card-text">{{ total_logs }}</h2>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3 mb-4">
-        <div class="card text-white bg-info shadow">
-            <div class="card-body">
-                <h5 class="card-title">運動メニュー数</h5>
-                <h2 class="card-text">{{ total_exercises }}</h2>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3 mb-4">
-        <div class="card text-white bg-warning shadow">
-            <div class="card-body">
-                <h5 class="card-title">Coming Soon</h5>
-                <h2 class="card-text">-</h2>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="row">
-    <!-- Recent Logs Table -->
-    <div class="col-md-8">
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">最近の体調ログ</h6>
+    <h2 class="section-title">最近のアクティビティ</h2>
+    <div class="card-container" style="grid-template-columns: 2fr 1fr; align-items: flex-start;">
+        <!-- Recent Logs Table -->
+        <div class="menu-card" style="padding: 0;">
+            <div style="padding: 20px; border-bottom: 1px solid var(--color-border);">
+                <h3 style="font-size: 1.25rem; margin: 0;">最近の体調ログ</h3>
             </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered" width="100%" cellspacing="0">
+            <div style="padding: 20px;">
+                <div class="table-responsive-wrapper">
+                    <table class="management-table">
                         <thead>
                             <tr>
                                 <th>日付</th>
@@ -72,7 +51,7 @@
                             </tr>
                             {% empty %}
                             <tr>
-                                <td colspan="5" class="text-center">データがありません</td>
+                                <td colspan="5" style="text-align: center; padding: 20px;">データがありません</td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -80,20 +59,14 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Simple Chart Placeholder -->
-    <div class="col-md-4">
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">システム情報</h6>
-            </div>
-            <div class="card-body">
-                <p>Status: <span class="badge bg-success">Normal</span></p>
-                <p>Ver: 1.0.0</p>
-                <p>最終更新: 今</p>
-            </div>
+        <!-- Simple Chart Placeholder -->
+        <div class="menu-card">
+            <h3 style="font-size: 1.25rem;">システム情報</h3>
+            <p>Status: <span class="tag-badge" style="background-color: #d1fae5; color: #065f46;">Normal</span></p>
+            <p>Ver: 1.0.0</p>
+            <p>最終更新: 今</p>
         </div>
     </div>
-</div>
+</section>
 {% endblock %}

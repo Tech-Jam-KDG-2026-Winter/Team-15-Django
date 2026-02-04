@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from django.db.models import Prefetch
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -21,7 +22,7 @@ def calculate_score(menu: ExerciseMenu, fatigue: int, mood: int, concern: str) -
         tags.add(n)
         tags.add(n.lstrip("#"))
 
-    concern = (concern or "").strip()
+    concern = (concern or "").strip().lower()
 
     def has_any(*names: str) -> bool:
         return any(n in tags for n in names)
@@ -37,7 +38,7 @@ def calculate_score(menu: ExerciseMenu, fatigue: int, mood: int, concern: str) -
     for key, wanted in concern_map.items():
         if key in concern:
             if has_any(*wanted):
-                score += 60
+                score += 200
 
     # 2) 疲れレベル
     if fatigue >= 4:
@@ -211,7 +212,7 @@ def history_list_view(request):
     logs = ConditionLog.objects.filter(user=request.user).order_by('-log_date', '-created_at')
     
     # ページネーション設定: 1ページあたり5件、最大20件まで表示
-    paginator = Paginator(logs[:20], 5)  # 最大20件に制限し、5件ごとにページング
+    paginator = Paginator(logs[:20], 6)  # 最大20件に制限し、5件ごとにページング
     
     try:
         page_obj = paginator.get_page(page_number)
@@ -246,7 +247,7 @@ def routine_list_view(request):
     routines = Routine.objects.filter(user=request.user).order_by('-view_count', '-added_at')
     
     # ページネーション設定: 1ページあたり5件、最大20件まで表示
-    paginator = Paginator(routines[:20], 5)  # 最大20件に制限し、5件ごとにページング
+    paginator = Paginator(routines[:20], 6)  # 最大20件に制限し、5件ごとにページング
     
     try:
         page_obj = paginator.get_page(page_number)
@@ -328,8 +329,8 @@ def exercise_list_view(request):
             # 重複を除去（ManyToManyで同じメニューが複数回取得される可能性があるため）
             exercises = exercises.distinct()
     
-    # ページネーション設定: 1ページあたり5件、最大20件まで表示
-    paginator = Paginator(exercises[:20], 5)
+    # ページネーション設定: 1ページあたり5件
+    paginator = Paginator(exercises, 6)
     
     try:
         page_obj = paginator.get_page(page_number)
@@ -367,3 +368,13 @@ def exercise_detail_view(request, pk: int): # URLから渡される主キー (ID
     serializer = ExerciseMenuSerializer(exercise)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+# ---- Page Views ----
+def exercise_detail_page(request, pk: int):
+    """
+    運動メニュー詳細ページを表示する
+    """
+    # テンプレートに渡すコンテキスト
+    context = {
+        'exercise_id': pk,
+    }
+    return render(request, 'exercise_detail.html', context)

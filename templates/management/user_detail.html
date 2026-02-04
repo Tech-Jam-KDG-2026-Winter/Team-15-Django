@@ -1,62 +1,75 @@
 {% extends 'management/base.html' %}
 
 {% block content %}
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">ユーザー詳細: {{ target_user.username }}</h1>
-</div>
-
-<div class="row">
-    <div class="col-md-6">
-        <div class="card mb-4 shadow-sm">
-            <div class="card-header">ユーザー情報 / 権限設定</div>
-            <div class="card-body">
-                <p><strong>Email:</strong> {{ target_user.email }}</p>
-                <p><strong>登録日:</strong> {{ target_user.date_joined }}</p>
-                <p><strong>最終ログイン:</strong> {{ target_user.last_login }}</p>
-                
-                <hr>
-                
-                <form method="post">
-                    {% csrf_token %}
-                    <div class="mb-3 form-check">
-                        {{ form.is_staff }}
-                        <label class="form-check-label" for="{{ form.is_staff.id_for_label }}">
-                            管理者権限 (is_staff)
-                        </label>
-                        <div class="form-text">管理画面へのアクセス権限を付与します。</div>
-                    </div>
-                    <div class="mb-3 form-check">
-                        {{ form.is_active }}
-                        <label class="form-check-label" for="{{ form.is_active.id_for_label }}">
-                            アクティブ (is_active)
-                        </label>
-                        <div class="form-text">チェックを外すとユーザーはログインできなくなります。</div>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary">権限を更新</button>
-                    <a href="{% url 'management:user_list' %}" class="btn btn-secondary">一覧に戻る</a>
-                </form>
-            </div>
+<section class="management-detail-section">
+    <div class="management-header">
+        <h2 class="section-title">ユーザー詳細: {{ target_user.username }}</h2>
+        <div class="management-actions">
+            <a href="{% url 'management:user_list' %}" class="btn-management">一覧に戻る</a>
         </div>
     </div>
 
-    <div class="col-md-6">
-        <div class="card shadow-sm">
-            <div class="card-header">直近の活動ログ (最新10件)</div>
-            <ul class="list-group list-group-flush">
+    <div class="card-container" style="grid-template-columns: 1fr 1fr; align-items: flex-start;">
+        <div class="menu-card">
+            <h3>ユーザー情報 / 権限設定</h3>
+            <div class="user-info-grid">
+                <p><strong>Email:</strong> {{ target_user.email }}</p>
+                <p><strong>登録日:</strong> {{ target_user.date_joined }}</p>
+                <p><strong>最終ログイン:</strong> {{ target_user.last_login }}</p>
+            </div>
+            
+            <hr style="margin: 20px 0;">
+            
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="form-check-label">
+                        {{ form.is_staff }}
+                        管理者権限 (is_staff)
+                    </label>
+                    <p class="form-text">管理画面へのアクセス権限を付与します。</p>
+                </div>
+                <div class="form-group">
+                    <label class="form-check-label">
+                        {{ form.is_active }}
+                        アクティブ (is_active)
+                    </label>
+                    <p class="form-text">チェックを外すとユーザーはログインできなくなります。</p>
+                </div>
+                
+                <button type="submit" class="btn-management-primary" style="width: 100%;">権限を更新</button>
+            </form>
+        </div>
+
+        <div class="menu-card">
+            <h3>直近の活動ログ (最新10件)</h3>
+            <ul class="simple-list">
                 {% for log in recent_logs %}
-                <li class="list-group-item">
-                    <div class="d-flex justify-content-between">
+                <li>
+                    <div class="list-item-header">
                         <span>{{ log.log_date }}</span>
-                        <span class="badge bg-light text-dark">疲れ:{{ log.fatigue_level }} / 気分:{{ log.mood_level }}</span>
+                        <span class="tag-badge">疲れ:{{ log.fatigue_level }} / 気分:{{ log.mood_level }}</span>
                     </div>
                     <small class="text-muted">{{ log.body_concern|default:"(悩みなし)" }}</small>
                 </li>
                 {% empty %}
-                <li class="list-group-item text-center text-muted">ログなし</li>
+                <li style="text-align: center; color: var(--color-text-muted);">ログなし</li>
                 {% endfor %}
             </ul>
         </div>
     </div>
-</div>
+</section>
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.user-info-grid p { margin: 0 0 12px; }
+.form-check-label { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+.form-text { font-size: 0.875rem; color: var(--color-text-muted); margin: 4px 0 0 28px; }
+.simple-list { list-style: none; padding: 0; margin: 0; }
+.simple-list li { padding: 12px 0; border-bottom: 1px solid var(--color-border); }
+.simple-list li:last-child { border-bottom: none; }
+.list-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; font-weight: 600;}
+</style>
 {% endblock %}
