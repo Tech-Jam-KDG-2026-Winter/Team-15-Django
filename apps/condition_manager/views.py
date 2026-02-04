@@ -38,7 +38,7 @@ def calculate_score(menu: ExerciseMenu, fatigue: int, mood: int, concern: str) -
     for key, wanted in concern_map.items():
         if key in concern:
             if has_any(*wanted):
-                score += 200
+                score += 60
 
     # 2) 疲れレベル
     if fatigue >= 4:
@@ -297,7 +297,8 @@ def exercise_list_view(request):
         exercises = exercises.filter(
             Q(name__icontains=keyword) | 
             Q(description__icontains=keyword) |
-            Q(target_area__icontains=keyword)
+            Q(target_area__icontains=keyword) |
+            Q(tags__name__icontains=keyword)  
         )
         
         # 検索時は関連度順にソート（nameに一致が優先、次にdescription）
