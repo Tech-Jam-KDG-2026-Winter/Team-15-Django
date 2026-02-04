@@ -13,32 +13,24 @@ def calculate_score(menu: ExerciseMenu, fatigue: int, mood: int, concern: str) -
     # ベース点（0件を減らすために少し入れる）
     score = 5
 
-    tags_raw = [t.name for t in menu.tags.all()]
-    # 「#」あり/なし揺れ対策
-    tags = set()
-    for n in tags_raw:
-        if not n:
-            continue
-        tags.add(n)
-        tags.add(n.lstrip("#"))
+    tags_raw = [t.name for t in menu.tags.all() if t.name]
+    tags_lower = {t.lower().lstrip("#") for t in tags_raw}
 
     concern = (concern or "").strip().lower()
 
     def has_any(*names: str) -> bool:
-        return any(n in tags for n in names)
+        names_lower = {n.lower() for n in names}
+        return any(n in tags_lower for n in names_lower)
 
-    # 1) 悩み（部分一致） → かなり強く効かせる
-    concern_map = {
-        "肩": ("肩こり解消", "肩甲骨", "肩"),
-        "首": ("首こり改善", "首", "首こり"),
-        "腰": ("腰痛改善", "腰", "骨盤"),
-        "目": ("眼精疲労", "目", "視界"),
-        "脚": ("むくみ改善", "脚", "下半身"),
-    }
-    for key, wanted in concern_map.items():
-        if key in concern:
-            if has_any(*wanted):
+    # 1) 悩み（タグによるキーワード検索）
+    if concern:
+        for tag in tags_lower: 
+            if not tag:
+                continue
+            first_char = tag[0]
+            if first_char in concern:
                 score += 60
+                break 
 
     # 2) 疲れレベル
     if fatigue >= 4:
