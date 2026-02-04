@@ -291,7 +291,7 @@ def exercise_list_view(request):
             Q(description__icontains=keyword) |
             Q(target_area__icontains=keyword) |
             Q(tags__name__icontains=keyword)  
-        )
+        ).distinct()
         
         # 検索時は関連度順にソート（nameに一致が優先、次にdescription）
         # nameに完全一致 > nameに部分一致 > descriptionに一致 の順
