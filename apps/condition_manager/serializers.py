@@ -26,6 +26,8 @@ class ConditionLogSerializer(serializers.ModelSerializer):
 
 
 class RoutineSerializer(serializers.ModelSerializer):
+    exercise = ExerciseMenuSerializer(read_only=True)
+
     class Meta:
         model = Routine
         fields = "__all__"

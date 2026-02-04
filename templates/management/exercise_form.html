@@ -1,41 +1,65 @@
 {% extends 'management/base.html' %}
 
 {% block content %}
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">
-        {% if object %}
-            運動メニュー編集: {{ object.name }}
-        {% else %}
-            新規運動メニュー作成
-        {% endif %}
-    </h1>
-</div>
+<section class="management-form-section">
+    <div class="management-header">
+        <h2 class="section-title">
+            {% if object %}
+                運動メニュー編集: {{ object.name }}
+            {% else %}
+                新規運動メニュー作成
+            {% endif %}
+        </h2>
+    </div>
 
-<div class="row">
-    <div class="col-md-8">
-        <form method="post" class="card p-4 shadow-sm">
+    <div class="menu-card" style="max-width: 800px; margin: 0 auto;">
+        <form method="post">
             {% csrf_token %}
             
             {% for field in form %}
-            <div class="mb-3">
-                <label for="{{ field.id_for_label }}" class="form-label fw-bold">{{ field.label }}</label>
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                 {{ field }}
                 {% if field.help_text %}
-                <div class="form-text">{{ field.help_text }}</div>
+                <p class="form-text">{{ field.help_text }}</p>
                 {% endif %}
                 {% if field.errors %}
-                <div class="text-danger">
+                <div class="error-text">
                     {% for error in field.errors %}{{ error }}{% endfor %}
                 </div>
                 {% endif %}
             </div>
             {% endfor %}
 
-            <div class="d-flex justify-content-between mt-4">
-                <a href="{% url 'management:exercise_list' %}" class="btn btn-secondary">キャンセル</a>
-                <button type="submit" class="btn btn-primary">保存</button>
+            <div class="form-actions">
+                <a href="{% url 'management:exercise_list' %}" class="btn-management">キャンセル</a>
+                <button type="submit" class="btn-management-primary">保存</button>
             </div>
         </form>
     </div>
-</div>
+</section>
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--color-border);
+}
+.error-text {
+    color: #ef4444;
+    font-size: 0.875rem;
+    margin-top: 4px;
+}
+.form-text { 
+    font-size: 0.875rem; 
+    color: var(--color-text-muted); 
+    margin-top: 4px;
+}
+</style>
 {% endblock %}

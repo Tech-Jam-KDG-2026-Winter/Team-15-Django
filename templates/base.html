@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -7,9 +8,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body class="karada-body">
+    <div id="toast-container" class="toast-container"></div>
     <header class="main-header">
         <div class="header-inner">
             <div class="nav-top">
@@ -28,6 +30,9 @@
                 <div class="user-info">
                     {% if user.is_authenticated %}
                         <span class="user-name">{{ user.username }}さん</span>
+                        {% if user.is_staff %}
+                            <a href="{% url 'management:dashboard' %}" class="nav-link" style="color: var(--color-primary); font-weight: bold;">管理ダッシュボード</a>
+                        {% endif %}
                         <form action="{% url 'logout' %}" method="post" style="display: inline;">
                             {% csrf_token %}
                             <button type="submit" class="logout-button">ログアウト</button>
@@ -64,6 +69,6 @@
         <p>&copy; 2026 Condition Partner.Team-15.</p>
     </footer>
 
-    <script src="/static/js/main.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
