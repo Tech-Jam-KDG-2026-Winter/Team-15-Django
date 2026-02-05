@@ -26,10 +26,13 @@ def signup_view(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            messages.success(request, 'アカウントが正常に作成されました。ログインしてください。')
-            return redirect('login') # ログインページのURL名
+            login(request, user)  # ユーザー登録後、自動的にログイン
+            messages.success(request, '登録が完了し、自動的にログインしました。')
+            return redirect('top')  # トップページのURL名
         else:
-            pass # テンプレートで form.errors を表示することで対応
+            # フォームが無効な場合は、エラーメッセージと共に再度フォームを表示
+            # messages.error(request, '入力内容に誤りがあります。') # 必要に応じて
+            pass
     else:
         form = CustomUserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
