@@ -42,7 +42,8 @@ Git / GitHub
 	•	/routines/ ルーティン一覧
 	•	/exercises/<id>/ 運動メニュー詳細
     •	/exercises/運動メニュー一覧
-	•	/admin/ 管理者画面（Django admin）
+	•	/management/運動メニュー一覧(superUserログイン時)
+	•	/admin/ django管理者画面（Django admin）
 
 
 # Django Team Starter
